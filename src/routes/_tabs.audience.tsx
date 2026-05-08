@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { StatusBar } from "@/components/StatusBar";
-import { TrendingUp, Users } from "lucide-react";
+import { TrendingUp, Users, Moon, Clock, CalendarDays, Sparkles, Film } from "lucide-react";
 
 export const Route = createFileRoute("/_tabs/audience")({
   component: Audience,
@@ -119,39 +119,77 @@ function Audience() {
         </div>
       </section>
 
-      {/* Engagement heatmap */}
+      {/* Audience Insights */}
       <section className="px-6 mt-7">
-        <h2 className="text-lg font-bold mb-3">Engagement heatmap</h2>
-        <div className="rounded-3xl glass p-5">
-          <div className="grid grid-cols-7 gap-1.5">
-            {Array.from({ length: 7 * 8 }).map((_, i) => {
-              const v = Math.random();
-              return (
-                <div
-                  key={i}
-                  className="aspect-square rounded-md"
-                  style={{
-                    background: `linear-gradient(135deg, oklch(0.66 0.22 295 / ${0.08 + v * 0.7}), oklch(0.70 0.16 245 / ${0.08 + v * 0.7}))`,
-                  }}
-                />
-              );
-            })}
-          </div>
-          <div className="mt-3 flex items-center justify-between text-[10px] text-muted-foreground">
-            <span>Less</span>
-            <div className="flex gap-1">
-              {[0.15, 0.3, 0.5, 0.7, 0.9].map((o) => (
-                <span
-                  key={o}
-                  className="h-3 w-3 rounded-sm"
-                  style={{ background: `oklch(0.66 0.22 295 / ${o})` }}
-                />
-              ))}
-            </div>
-            <span>More</span>
-          </div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-bold">Audience insights</h2>
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground inline-flex items-center gap-1">
+            <Sparkles className="h-3 w-3" /> For you
+          </span>
+        </div>
+        <div className="space-y-3">
+          <InsightCard
+            icon={Moon}
+            headline="Evenings are your sweet spot"
+            body="Your evening posts perform 38% better than the rest of the day."
+            trend="+38%"
+          />
+          <InsightCard
+            icon={Clock}
+            headline="Peak listening window"
+            body="Your audience is most active between 7PM–10PM."
+          />
+          <InsightCard
+            icon={CalendarDays}
+            headline="Weekends are heating up"
+            body="Weekend uploads are getting stronger engagement than weekdays."
+            trend="+22%"
+          />
+          <InsightCard
+            icon={TrendingUp}
+            headline="Thursdays drive growth"
+            body="Your audience growth is strongest on Thursdays — try dropping then."
+          />
+          <InsightCard
+            icon={Film}
+            headline="Short-form is winning"
+            body="Short clips are driving more interaction than longer posts."
+            trend="+45%"
+          />
         </div>
       </section>
+    </div>
+  );
+}
+
+function InsightCard({
+  icon: Icon,
+  headline,
+  body,
+  trend,
+}: {
+  icon: React.ElementType;
+  headline: string;
+  body: string;
+  trend?: string;
+}) {
+  return (
+    <div className="rounded-3xl glass p-4 flex gap-4 relative overflow-hidden">
+      <div className="absolute -top-10 -right-10 h-28 w-28 rounded-full gradient-primary opacity-15 blur-3xl" />
+      <div className="h-11 w-11 rounded-2xl gradient-primary grid place-items-center glow-soft shrink-0">
+        <Icon className="h-5 w-5 text-white" />
+      </div>
+      <div className="relative flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <p className="text-sm font-semibold leading-snug">{headline}</p>
+          {trend && (
+            <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-success/15 text-success px-2 py-0.5 text-[10px] font-semibold">
+              <TrendingUp className="h-2.5 w-2.5" /> {trend}
+            </span>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{body}</p>
+      </div>
     </div>
   );
 }
