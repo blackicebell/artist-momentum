@@ -14,7 +14,13 @@ import { Route as SetupRouteImport } from './routes/setup'
 import { Route as IntroRouteImport } from './routes/intro'
 import { Route as ConnectRouteImport } from './routes/connect'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as TabsRouteImport } from './routes/_tabs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TabsReleasesRouteImport } from './routes/_tabs.releases'
+import { Route as TabsProfileRouteImport } from './routes/_tabs.profile'
+import { Route as TabsInsightsRouteImport } from './routes/_tabs.insights'
+import { Route as TabsHomeRouteImport } from './routes/_tabs.home'
+import { Route as TabsAudienceRouteImport } from './routes/_tabs.audience'
 
 const SyncRoute = SyncRouteImport.update({
   id: '/sync',
@@ -41,10 +47,39 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TabsRoute = TabsRouteImport.update({
+  id: '/_tabs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const TabsReleasesRoute = TabsReleasesRouteImport.update({
+  id: '/releases',
+  path: '/releases',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsProfileRoute = TabsProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsInsightsRoute = TabsInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsHomeRoute = TabsHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => TabsRoute,
+} as any)
+const TabsAudienceRoute = TabsAudienceRouteImport.update({
+  id: '/audience',
+  path: '/audience',
+  getParentRoute: () => TabsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -54,6 +89,11 @@ export interface FileRoutesByFullPath {
   '/intro': typeof IntroRoute
   '/setup': typeof SetupRoute
   '/sync': typeof SyncRoute
+  '/audience': typeof TabsAudienceRoute
+  '/home': typeof TabsHomeRoute
+  '/insights': typeof TabsInsightsRoute
+  '/profile': typeof TabsProfileRoute
+  '/releases': typeof TabsReleasesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,26 +102,73 @@ export interface FileRoutesByTo {
   '/intro': typeof IntroRoute
   '/setup': typeof SetupRoute
   '/sync': typeof SyncRoute
+  '/audience': typeof TabsAudienceRoute
+  '/home': typeof TabsHomeRoute
+  '/insights': typeof TabsInsightsRoute
+  '/profile': typeof TabsProfileRoute
+  '/releases': typeof TabsReleasesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_tabs': typeof TabsRouteWithChildren
   '/auth': typeof AuthRoute
   '/connect': typeof ConnectRoute
   '/intro': typeof IntroRoute
   '/setup': typeof SetupRoute
   '/sync': typeof SyncRoute
+  '/_tabs/audience': typeof TabsAudienceRoute
+  '/_tabs/home': typeof TabsHomeRoute
+  '/_tabs/insights': typeof TabsInsightsRoute
+  '/_tabs/profile': typeof TabsProfileRoute
+  '/_tabs/releases': typeof TabsReleasesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/connect' | '/intro' | '/setup' | '/sync'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/connect'
+    | '/intro'
+    | '/setup'
+    | '/sync'
+    | '/audience'
+    | '/home'
+    | '/insights'
+    | '/profile'
+    | '/releases'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/connect' | '/intro' | '/setup' | '/sync'
-  id: '__root__' | '/' | '/auth' | '/connect' | '/intro' | '/setup' | '/sync'
+  to:
+    | '/'
+    | '/auth'
+    | '/connect'
+    | '/intro'
+    | '/setup'
+    | '/sync'
+    | '/audience'
+    | '/home'
+    | '/insights'
+    | '/profile'
+    | '/releases'
+  id:
+    | '__root__'
+    | '/'
+    | '/_tabs'
+    | '/auth'
+    | '/connect'
+    | '/intro'
+    | '/setup'
+    | '/sync'
+    | '/_tabs/audience'
+    | '/_tabs/home'
+    | '/_tabs/insights'
+    | '/_tabs/profile'
+    | '/_tabs/releases'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TabsRoute: typeof TabsRouteWithChildren
   AuthRoute: typeof AuthRoute
   ConnectRoute: typeof ConnectRoute
   IntroRoute: typeof IntroRoute
@@ -126,6 +213,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_tabs': {
+      id: '/_tabs'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof TabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -133,11 +227,65 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_tabs/releases': {
+      id: '/_tabs/releases'
+      path: '/releases'
+      fullPath: '/releases'
+      preLoaderRoute: typeof TabsReleasesRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/profile': {
+      id: '/_tabs/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof TabsProfileRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/insights': {
+      id: '/_tabs/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof TabsInsightsRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/home': {
+      id: '/_tabs/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof TabsHomeRouteImport
+      parentRoute: typeof TabsRoute
+    }
+    '/_tabs/audience': {
+      id: '/_tabs/audience'
+      path: '/audience'
+      fullPath: '/audience'
+      preLoaderRoute: typeof TabsAudienceRouteImport
+      parentRoute: typeof TabsRoute
+    }
   }
 }
 
+interface TabsRouteChildren {
+  TabsAudienceRoute: typeof TabsAudienceRoute
+  TabsHomeRoute: typeof TabsHomeRoute
+  TabsInsightsRoute: typeof TabsInsightsRoute
+  TabsProfileRoute: typeof TabsProfileRoute
+  TabsReleasesRoute: typeof TabsReleasesRoute
+}
+
+const TabsRouteChildren: TabsRouteChildren = {
+  TabsAudienceRoute: TabsAudienceRoute,
+  TabsHomeRoute: TabsHomeRoute,
+  TabsInsightsRoute: TabsInsightsRoute,
+  TabsProfileRoute: TabsProfileRoute,
+  TabsReleasesRoute: TabsReleasesRoute,
+}
+
+const TabsRouteWithChildren = TabsRoute._addFileChildren(TabsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TabsRoute: TabsRouteWithChildren,
   AuthRoute: AuthRoute,
   ConnectRoute: ConnectRoute,
   IntroRoute: IntroRoute,
