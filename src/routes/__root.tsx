@@ -76,10 +76,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "A premium app for independent artists to track momentum, audience growth, and traction across Spotify, YouTube, Instagram, and SoundCloud." },
       { name: "author", content: "Momentum" },
       { property: "og:title", content: "Momentum — Track your music's growth" },
-      { property: "og:description", content: "Feel your music move. Track momentum across every platform in one beautifully simple app." },
+      { property: "og:description", content: "A premium app for independent artists to track momentum, audience growth, and traction across Spotify, YouTube, Instagram, and SoundCloud." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Momentum — Track your music's growth" },
+      { name: "twitter:description", content: "A premium app for independent artists to track momentum, audience growth, and traction across Spotify, YouTube, Instagram, and SoundCloud." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0e6822cc-f137-496c-98fe-80073e9a4fcb/id-preview-66f9a0a5--5c53ea31-2caf-40e9-adfe-83d3b42591d3.lovable.app-1778275598699.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0e6822cc-f137-496c-98fe-80073e9a4fcb/id-preview-66f9a0a5--5c53ea31-2caf-40e9-adfe-83d3b42591d3.lovable.app-1778275598699.png" },
     ],
     links: [
       {
